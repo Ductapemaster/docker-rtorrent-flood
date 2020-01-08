@@ -76,10 +76,13 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
 
-COPY rootfs /
+COPY rootfs/usr/flood/config.js /usr/flood/config.js
+RUN cd /usr/flood && npm run build
 
-RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/* \
- && cd /usr/flood/ && npm run build
+COPY rootfs/home /home
+COPY rootfs/usr/local/bin /usr/local/bin
+COPY rootfs/etc /etc
+RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/*
 
 VOLUME /data /flood-db
 
