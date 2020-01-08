@@ -1,4 +1,14 @@
 scgi_local = /tmp/rtorrent.sock
+log.open_file = "rtorrent", /tmp/rtorrent.log
+log.add_output = "info", "rtorrent"
+#log.add_output = "connection_info", "rtorrent"
+#log.add_output = "dht_info", "rtorrent"
+#log.add_output = "peer_info", "rtorrent"
+#log.add_output = "rpc_info", "rtorrent"
+#log.add_output = "storage_info", "rtorrent"
+#log.add_output = "thread_info", "rtorrent" 
+#log.add_output = "tracker_info", "rtorrent"
+log.add_output = "torrent_debug", "rtorrent"
 
 encoding_list = UTF-8
 port_range = 49184-49184
@@ -26,3 +36,4 @@ schedule = insufficient_disk_space,1,30,close_low_diskspace=500M
 
 method.set_key=event.download.finished,unrar,"execute={/usr/local/bin/rtunrar.sh,$d.base_path=}"
 method.set_key=event.download.inserted_new,loaded_time,"d.custom.set=addtime,$cat=$system.time=;d.save_full_session="
+method.set_key=event.download.inserted_new,startup,"d.start=1"
